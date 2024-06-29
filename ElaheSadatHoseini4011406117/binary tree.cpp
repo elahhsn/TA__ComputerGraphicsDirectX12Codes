@@ -1,7 +1,70 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+template <typename T>
+class Queue {
+private:
+    struct Node {
+        T data;
+        Node* next;
+        Node(T value) : data(value), next(nullptr) {}
+    };
 
+    Node* Front;
+    Node* rear;
+
+public:
+    Queue() : Front(nullptr), rear(nullptr) {}
+
+    ~Queue() {
+        while (!isEmpty()) {
+            dequeue();
+        }
+    }
+
+    void push(T value) {
+        Node* newNode = new Node(value);
+        if (isEmpty()) {
+            Front = rear = newNode;
+        } else {
+            rear->next = newNode;
+            rear = newNode;
+        }
+    }
+
+    void pop() {
+        if (isEmpty()) {
+            cout << "Queue is empty!" << endl;
+            return;
+        }
+        Node* temp = Front;
+        Front = Front->next;
+        delete temp;
+        if (Front == nullptr) {
+            rear = nullptr;
+        }
+    }
+
+    T front() {
+        if (isEmpty()) {
+            throw runtime_error("Queue is empty!");
+        }
+        return Front->data;
+    }
+
+    bool isEmpty() {
+        return Front == nullptr;
+    }
+
+    void display() {
+        Node* current = Front;
+        while (current != nullptr) {
+            cout << current->data << " ";
+            current = current->next;
+        }
+        cout << endl;
+    }
+};
 
 
 
